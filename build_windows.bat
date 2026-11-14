@@ -13,7 +13,7 @@ pip install -r requirements.txt pywebview pyinstaller
 echo [3/4] Building Trading Journal for Windows...
 set "ICON_ARGS="
 if exist icon.ico set "ICON_ARGS=--icon icon.ico"
-pyinstaller --noconfirm --windowed --name "Trading Journal" ^
+python -m PyInstaller --noconfirm --windowed --name "Trading Journal" ^
   %ICON_ARGS% ^
   --add-data "static;static" ^
   --hidden-import webview ^

@@ -2,10 +2,13 @@
 # Đóng gói thành "Trading Journal.app" (chạy trên máy Mac của bạn)
 set -e
 cd "$(dirname "$0")"
-python3 -m venv .venv
+if [ ! -x .venv/bin/python ] || ! .venv/bin/python -c 'import sys' >/dev/null 2>&1; then
+  echo "Existing virtual environment is invalid or moved; recreating it..."
+  python3 -m venv --clear .venv
+fi
 source .venv/bin/activate
-pip install -r requirements.txt pywebview pyinstaller
-pyinstaller --noconfirm --windowed --name "Trading Journal" --osx-bundle-identifier com.tradingjournal.app \
+python -m pip install -r requirements.txt pywebview pyinstaller
+python -m PyInstaller --noconfirm --windowed --name "Trading Journal" --osx-bundle-identifier com.tradingjournal.app \
   --icon icon.icns \
   --add-data "static:static" \
   --hidden-import webview --hidden-import lxml.html --hidden-import lxml.etree --hidden-import lxml._elementpath \
